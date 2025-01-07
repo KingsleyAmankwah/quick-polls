@@ -1,5 +1,4 @@
 <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-  <!-- Header -->
   <div class="flex justify-between items-center mb-8">
     <div>
       <h1 class="text-3xl font-bold text-gray-900">Polls</h1>
@@ -12,22 +11,12 @@
     </app-button>
   </div>
 
-  <!-- Search and Filter -->
-  <!-- <div class="mb-6">
-    <app-input
-      placeholder="Search polls..."
-      (valueChange)="searchTerm$.next($event)"
-    ></app-input>
-  </div> -->
-
-  <!-- Loading State -->
   <div *ngIf="isLoading" class="flex justify-center py-12">
     <div
       class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"
     ></div>
   </div>
 
-  <!-- Error State -->
   <div *ngIf="error" class="bg-red-50 p-4 rounded-lg">
     <p class="text-red-700">{{ error }}</p>
     <app-button variant="secondary" class="mt-2" (onClick)="loadPolls()">
@@ -35,9 +24,11 @@
     </app-button>
   </div>
 
-  <!-- Poll Grid -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div *ngFor="let poll of polls" class="hover:shadow-lg transition-shadow">
+    <div
+      *ngFor="let poll of polls"
+      class="bg-white rounded-lg shadow-sm border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all duration-200 p-6"
+    >
       <div
         class="space-y-4 cursor-pointer"
         (click)="router.navigate(['/polls', poll.id])"
@@ -68,9 +59,8 @@
     </div>
   </div>
 
-  <!-- Empty State -->
   <div *ngIf="polls?.length === 0" class="text-center py-12">
     <h3 class="text-lg font-medium text-gray-900 mb-2">No polls found</h3>
-    <p class="text-gray-500">Try adjusting create a new poll</p>
+    <p class="text-gray-500">Try creating a new poll</p>
   </div>
 </div>
