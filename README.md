@@ -30,6 +30,6 @@ A modern polling application built with Angular that allows users to create, sha
 ### Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/quick-polls.git
+git clone https://github.com/KingsleyAmankwah/quick-polls
 cd quick-polls
 ```
