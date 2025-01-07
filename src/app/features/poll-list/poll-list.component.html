@@ -1,0 +1,76 @@
+<div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-8">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900">Polls</h1>
+      <p class="mt-2 text-sm text-gray-600">
+        Vote and share your opinion on various topics
+      </p>
+    </div>
+    <app-button (onClick)="router.navigate(['/create'])">
+      Create Poll
+    </app-button>
+  </div>
+
+  <!-- Search and Filter -->
+  <!-- <div class="mb-6">
+    <app-input
+      placeholder="Search polls..."
+      (valueChange)="searchTerm$.next($event)"
+    ></app-input>
+  </div> -->
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="flex justify-center py-12">
+    <div
+      class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"
+    ></div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="bg-red-50 p-4 rounded-lg">
+    <p class="text-red-700">{{ error }}</p>
+    <app-button variant="secondary" class="mt-2" (onClick)="loadPolls()">
+      Try Again
+    </app-button>
+  </div>
+
+  <!-- Poll Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div *ngFor="let poll of polls" class="hover:shadow-lg transition-shadow">
+      <div
+        class="space-y-4 cursor-pointer"
+        (click)="router.navigate(['/polls', poll.id])"
+      >
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900">
+            {{ poll.question }}
+          </h3>
+        </div>
+
+        <div class="space-y-2">
+          <div
+            *ngFor="let option of poll.options.slice(0, 2)"
+            class="text-sm text-gray-600"
+          >
+            • {{ option.text }}
+          </div>
+          <div *ngIf="poll.options.length > 2" class="text-sm text-gray-400">
+            +{{ poll.options.length - 2 }} more options
+          </div>
+        </div>
+
+        <div class="flex justify-between items-center text-sm text-gray-500">
+          <span>{{ poll.totalVotes }} votes</span>
+          <span>{{ poll.created | date : "mediumDate" }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="polls?.length === 0" class="text-center py-12">
+    <h3 class="text-lg font-medium text-gray-900 mb-2">No polls found</h3>
+    <p class="text-gray-500">Try adjusting create a new poll</p>
+  </div>
+</div>
