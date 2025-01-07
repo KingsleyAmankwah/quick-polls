@@ -17,7 +17,7 @@
           formControlName="question"
           placeholder="What would you like to ask?"
           [error]="getErrorMessage('question')"
-        ></app-input>
+        />
 
         <!-- Options -->
         <div formArrayName="options" class="space-y-4">
@@ -69,7 +69,7 @@
           Cancel
         </app-button>
         <app-button type="submit" [disabled]="!pollForm.valid || isSubmitting">
-          Create Poll
+          {{ isSubmitting ? "Submiting..." : "Create Poll" }}
         </app-button>
       </div>
     </form>

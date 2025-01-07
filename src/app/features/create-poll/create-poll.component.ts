@@ -40,7 +40,6 @@ export class CreatePollComponent {
       options: this.fb.array([]),
     });
 
-    // Add initial two options
     this.addOption();
     this.addOption();
   }
@@ -68,9 +67,13 @@ export class CreatePollComponent {
     const control = this.pollForm.get(field);
     if (!control?.errors || !control.touched) return '';
 
-    if (control.errors['required']) return `${field} is required`;
+    const fieldLabel = field.charAt(0).toUpperCase() + field.slice(1);
+
+    if (control.errors['required']) {
+      return `${fieldLabel} is required`;
+    }
     if (control.errors['minlength']) {
-      return `${field} must be at least ${control.errors['minlength'].requiredLength} characters`;
+      return `${fieldLabel} must be at least ${control.errors['minlength'].requiredLength} characters`;
     }
     return '';
   }
@@ -107,7 +110,10 @@ export class CreatePollComponent {
       };
 
       this.pollsService.createPoll(createPollDto).subscribe({
-        next: () => this.router.navigate(['']),
+        next: () => {
+          alert('Poll created successfully');
+          this.router.navigate(['']);
+        },
         error: (error) => console.error('Error creating poll:', error),
         complete: () => (this.isSubmitting = false),
       });
