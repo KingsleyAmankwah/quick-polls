@@ -1,0 +1,77 @@
+<div class="max-w-2xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+  <div class="space-y-8">
+    <!-- Header -->
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900">Create New Poll</h1>
+      <p class="mt-2 text-sm text-gray-600">
+        Create a new poll with multiple options for people to vote on.
+      </p>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="pollForm" (ngSubmit)="onSubmit()" class="space-y-6">
+      <!-- Question -->
+      <div class="space-y-6">
+        <app-input
+          label="Question"
+          formControlName="question"
+          placeholder="What would you like to ask?"
+          [error]="getErrorMessage('question')"
+        ></app-input>
+
+        <!-- Options -->
+        <div formArrayName="options" class="space-y-4">
+          <div class="flex items-center justify-between">
+            <label class="block text-sm font-medium text-gray-700">
+              Options
+            </label>
+            <app-button
+              *ngIf="options.length < 6"
+              type="button"
+              variant="secondary"
+              (click)="addOption()"
+            >
+              Add Option
+            </app-button>
+          </div>
+
+          <div
+            *ngFor="let option of options.controls; let i = index"
+            [formGroupName]="i"
+            class="flex items-start space-x-4"
+          >
+            <div class="flex-grow">
+              <app-input
+                [placeholder]="'Option ' + (i + 1)"
+                formControlName="text"
+                [error]="getOptionErrorMessage(i)"
+              ></app-input>
+            </div>
+            <app-button
+              *ngIf="i > 1"
+              type="button"
+              variant="danger"
+              (click)="removeOption(i)"
+            >
+              Remove
+            </app-button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="flex justify-end space-x-4">
+        <app-button
+          type="button"
+          variant="secondary"
+          (click)="router.navigate([''])"
+        >
+          Cancel
+        </app-button>
+        <app-button type="submit" [disabled]="!pollForm.valid || isSubmitting">
+          Create Poll
+        </app-button>
+      </div>
+    </form>
+  </div>
+</div>
