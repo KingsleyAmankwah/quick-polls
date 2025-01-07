@@ -10,11 +10,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PollsService } from '../../services/polls.service';
 
 import { CommonModule } from '@angular/common';
+import { ButtonComponent } from '../../components/button/button.component';
 
 @Component({
   selector: 'app-poll-details',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ButtonComponent],
   templateUrl: './poll-details.component.html',
   styleUrl: './poll-details.component.css',
 })
@@ -50,19 +51,16 @@ export class PollDetailsComponent implements OnInit {
         this.pollsService.getPoll(params['id']).subscribe({
           next: (poll) => {
             this.poll = poll;
-            console.log('Loaded poll:', poll);
             this.isLoading = false;
           },
           error: (error) => {
-            console.error('Error loading poll:', error);
-            this.error = 'Failed to load poll. Please try again.';
+            this.error = error;
             this.isLoading = false;
           },
         });
       },
       error: (error) => {
-        console.error('Error getting route params:', error);
-        this.error = 'Failed to get poll ID from route.';
+        this.error = error;
         this.isLoading = false;
       },
     });
@@ -79,9 +77,11 @@ export class PollDetailsComponent implements OnInit {
           this.poll = response.updatedPoll;
           this.hasVoted = true;
           this.isSubmitting = false;
+          this.router.navigate(['']);
+          alert('Vote successfully done');
         },
         error: (error) => {
-          this.error = 'Failed to submit vote. Please try again.';
+          this.error = error;
           this.isSubmitting = false;
         },
       });
