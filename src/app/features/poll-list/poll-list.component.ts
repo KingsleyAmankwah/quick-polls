@@ -31,12 +31,10 @@ export class PollListComponent implements OnInit {
     this.pollsService.getPolls().subscribe({
       next: (polls) => {
         this.polls = polls;
-        console.log('Polls:', polls);
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Error loading polls:', error);
-        this.error = 'Failed to load polls. Please try again.';
+        this.error = error;
         this.isLoading = false;
       },
     });
